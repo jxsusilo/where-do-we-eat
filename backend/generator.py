@@ -32,7 +32,8 @@ class Room:
     def result(self, cuisine: str, price: list[str]): 
         p = FoodPicker(self._location)
         api_key = input("Enter apikey: ")
-        p.set_api_key(api_key)
+        if len(api_key) > 0:
+            p.set_api_key(api_key)
         data = p.result(cuisine, price)
         yield from data
 
@@ -58,9 +59,9 @@ class Room:
 
     def code(self) -> str: 
         '''Returns a room code of length max_len'''
-        # would be nice to add checks to make sure the code 
-        # doesn't already exist in the room 
         MAX_LEN = 6
-        res = ''.join(random.choices(string.ascii_uppercase +
+        while True: 
+            res = ''.join(random.choices(string.ascii_uppercase +
                                 string.digits, k=MAX_LEN))
-        return str(res)
+            if not(res in rooms.keys()):
+                return str(res)
