@@ -7,8 +7,7 @@ root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(root_path)
 
 from backend.api import FoodPicker 
-import string
-import random
+
 
 #global dictionary
 rooms = {
@@ -16,8 +15,8 @@ rooms = {
 }
 
 class Room:
-    def __init__(self, location):
-        self._room_id = self.code()
+    def __init__(self, location, code):
+        self._room_id = code
         self._participants = []
         self._restaurants = []
         self._location = location
@@ -63,11 +62,4 @@ class Room:
     def add_restaurant(self, restaurant: str):
         self._restaurants.append(restaurant)
 
-    def code(self) -> str: 
-        '''Returns a room code of length max_len'''
-        MAX_LEN = 6
-        while True: 
-            res = ''.join(random.choices(string.ascii_uppercase +
-                                string.digits, k=MAX_LEN))
-            if not(res in rooms.keys()):
-                return str(res)
+    
