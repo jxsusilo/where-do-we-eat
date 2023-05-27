@@ -1,6 +1,12 @@
 # session.py
+import sys
+import os
 
-from api import FoodPicker 
+# Add the project root directory to the Python path
+root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(root_path)
+
+from backend.api import FoodPicker 
 import string
 import random
 

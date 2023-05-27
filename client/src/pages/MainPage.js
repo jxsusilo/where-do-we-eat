@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Title from '../components/Title'
+//import Title from '../components/Title'
 import UserInput from '../components/UserInput'
 import '../App.css';
 import RestaurantList from '../components/RestaurantList';
@@ -53,14 +53,22 @@ function MainPage(props) {
     { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine"},
   ]
 
-  useEffect(() => {
-    console.log(checkedList)
-  }, [checkedList])
 
-  const submit = () => {
-    console.log('hgtuyvj');
-    //fetch('server,com/uploasd/'+ sessionCode), {body: JSON.stringify({chexcked: checkedList})}.gthem()
-  }
+useEffect(() => {
+  console.log(checkedList);
+}, [checkedList]);
+
+const submit = () => {
+  fetch('http://127.0.0.1:5000/submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ checked: checkedList })
+  }).then(res => res.json()).then(response => {
+    console.log(response)
+  })
+};
 
   return (
     <div className='App'>

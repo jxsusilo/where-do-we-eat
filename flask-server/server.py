@@ -1,6 +1,14 @@
-from flask import Flask,request, jsonify
+import sys
+import os
+
+# Add the project root directory to the Python path
+root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(root_path)
+
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from backend import api 
+from backend import generator
+
 app = Flask(__name__)
 CORS(app)
 
@@ -20,11 +28,11 @@ def submit():
     checked_list = data.get('checked')
     print(checked_list)
     
-    for food_item in checked_list: 
-        foodvar = api.FoodPicker(cuisine=checked_list[food_item])
-        return foodvar.get_restaurant() #return restraunt json data
+    roomvar = generator.Room("irvine")
+    for a in roomvar.result(checked_list[0],['$', '$$', '$$$', '$$$$']):
+        print(a)
 
-    response = {'message': 'Data received successfully'}
+    response = {'message': 'Data received successfully', 'info':a[0]}
     return response, 200
 
 if __name__ == '__main__':
