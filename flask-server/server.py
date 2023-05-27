@@ -29,7 +29,7 @@ def submit():
     print(checked_list)
     
     for food_item in checked_list: 
-        roomvar = Room("irvine")
+        roomvar = generator.Room("irvine")
         print(roomvar.result(food_item))
 
     response = {'message': 'Data received successfully'}
