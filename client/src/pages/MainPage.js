@@ -53,14 +53,28 @@ function MainPage(props) {
     { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine"},
   ]
 
-  useEffect(() => {
-    console.log(checkedList)
-  }, [checkedList])
 
-  const submit = () => {
-    console.log('hgtuyvj');
-    //fetch('server,com/uploasd/'+ sessionCode), {body: JSON.stringify({chexcked: checkedList})}.gthem()
-  }
+useEffect(() => {
+  console.log(checkedList);
+}, [checkedList]);
+
+const submit = () => {
+  console.log('hgtuyvj');
+  fetch('http:http://127.0.0.1:5000/' + sessionCode, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ checked: checkedList })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+};
 
   return (
     <div className='App'>
