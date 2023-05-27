@@ -1,7 +1,7 @@
 function Title() {
     return (
         <div className="Title">
-            <h1>Where Do We Eat?</h1>
+            <h1>- Where do we eat?</h1>
         </div>
     )
 }

@@ -47,7 +47,7 @@ function Login(props) {
         </form>
         <p>OR</p>
         <h3>Create a New Session</h3>
-        <button onClick={createNewSession}>Create</button>
+        <button onClick={createNewSession}>CREATE</button>
     </div>
   )
 }

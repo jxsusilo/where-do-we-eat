@@ -49,8 +49,21 @@ function MainPage(props) {
   ];
 
   const restaurants = [
-    { name: "Restaurant ABC", rating: 5, address: "123 First St, Los Angeles"},
-    { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine"},
+    { name: "Restaurant ABC", rating: 5, address: "123 First St, Los Angeles", imgsrc: "https://s3-media1.fl.yelpcdn.com/bphoto/hWa52yLwUAtiZh-xPYXGxg/o.jpg"},
+    { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+    { name: "CUCINA enoteca Irvine", rating: 4, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+    { name: "Luna Rossa", rating: 5, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+    { name: "Brio Italian Grille", rating: 2, address: [
+      "774 Spectrum Ctr Dr",
+      "Irvine, CA 92618"
+    ], imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+  ]
+
+  const participantList = [
+    username,
+    'Friend1',
+    'Friend2',
+    'Friend3',
   ]
 
   useEffect(() => {
@@ -67,14 +80,24 @@ function MainPage(props) {
       <p>Welcome, {username}!</p>
       <p>Session Code: {sessionCode}</p>
       <div className='container'>
-        <div className='column'>
+        <div className='column' id='column1'>
+          <h2>Enter Your Preferences:</h2>
           <UserInput name='Cuisine' listData={cuisineList} checkedList={checkedList} setCheckedList={setCheckedList} />
           <UserInput name='Price' listData={priceList} checkedList={checkedList} setCheckedList={setCheckedList} />
-          <button onClick={submit}>Submit Preferences</button>
+          <br></br>
+          <button onClick={submit}>SUBMIT</button>
         </div>
-        <div className='column'>
+        <div className='column' id='column2'>
           <h2>Results</h2>
           <RestaurantList listData={restaurants}/>
+        </div>
+        <div className='column' id='column3'>
+          <h2>Participants</h2>
+            {participantList.map((pname, index) => {
+                  return (
+                      <p>{pname}</p>
+                  );
+            })}
         </div>
       </div>
     </div>
