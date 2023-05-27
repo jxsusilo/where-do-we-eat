@@ -1,5 +1,6 @@
 #api.py
-
+from pathlib import Path
+script_path = Path(__file__, '..').resolve()
 import json 
 import urllib.parse
 from pip._vendor import requests
@@ -45,19 +46,19 @@ class FoodPicker:
 
     def result(self, cuisine: str) -> str: 
         if not self._api_key:  
-            with open('/Users/alvinachow/Downloads/where-do-we-eat/backend/mock.json', "r") as f:
-                data = json.load(f)
-            return data
+            with open(script_path.joinpath("mock.json"), "r") as f:
+                results = json.load(f)
+                data = self.filter(cuisine, results)
+                yield from data
         else: 
             response = requests.get(self.url(cuisine), headers=self.header())
-            return response.text
+            data = response.text
+            results = self.filter(cuisine, json.loads(data))
+            yield from results
 
-    def get_restaurant_info(self, cuisine):
-        data = self.result(cuisine)
-        
+    def filter(self, cuisine, data: json):
         if "businesses" in data: 
             for res in data['businesses']:
-
                 name = res['name']
                 image_url = res['image_url']
                 categories = res["categories"]
@@ -66,12 +67,9 @@ class FoodPicker:
                     if alias in cuisines:
                         cuisine = alias
                 rating = res['rating']
-
                 try: 
                     price = res['price']
                 except KeyError: 
                     price = None
-
                 location = res['location']['display_address']
-
                 yield name, image_url, cuisine, price, rating, location
