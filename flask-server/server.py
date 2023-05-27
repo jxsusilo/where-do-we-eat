@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,request
 from flask_cors import CORS
 from backend import api 
 app = Flask(__name__)
