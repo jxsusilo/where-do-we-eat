@@ -1,12 +1,17 @@
-from flask import Flask,request
+from flask import Flask,request, jsonify
 from flask_cors import CORS
 from backend import api 
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def index():
+    return jsonify({'message': 'Hey, everything works!!'})
+
+
 @app.route("/members")
 def members():
-    return {"members": ["Member1", "Member2", "Member3"]}
+    return jsonify({"members": ["Member1", "Member2", "Member3"]})
 
 
 @app.route('/submit', methods=['POST'])
