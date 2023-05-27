@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 function UserInput(props) {
-    const [checkedList, setCheckedList] = useState([]);
+    
     const handleSelect = (event) => {
         const value = event.target.value;
         const isChecked = event.target.checked;
      
         if (isChecked) {
           //Add checked item into checkList
-          setCheckedList([...checkedList, value]);
+          props.setCheckedList([...props.checkedList, value]);
         } else {
           //Remove unchecked item from checkList
-          const filteredList = checkedList.filter((item) => item !== value);
-          setCheckedList(filteredList);
+          const filteredList = props.checkedList.filter((item) => item !== value);
+          props.setCheckedList(filteredList);
         }
       };
 

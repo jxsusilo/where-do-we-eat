@@ -18,6 +18,8 @@ function App() {
   //   )
   // }, [])
 
+  const [checkedList, setCheckedList] = useState([]);
+
   const cuisineList = [
     { id: "1", value: "American" },
     { id: "2", value: "Chinese" },
@@ -41,19 +43,32 @@ function App() {
     { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine"},
   ]
 
+  const sessionCode = "ABCDE1"
+
+  useEffect(() => {
+    console.log(checkedList)
+  }, [checkedList])
+
+  const submit = () => {
+    console.log('hgtuyvj');
+    //fetch('server,com/uploasd/'+ sessionCode), {body: JSON.stringify({chexcked: checkedList})}.gthem()
+  }
+
   return (
     <div className='App'>
       <Title/>
+      <p>Session Code: {sessionCode}</p>
       <div className='container'>
         <div className='column'>
-          <UserInput name='Cuisine' listData={cuisineList} />
-          <UserInput name='Price' listData={priceList} />
+          <UserInput name='Cuisine' listData={cuisineList} checkedList={checkedList} setCheckedList={setCheckedList} />
+          <UserInput name='Price' listData={priceList} checkedList={checkedList} setCheckedList={setCheckedList} />
           <button>Submit Preferences</button>
         </div>
         <div className='column'>
           <h2>Results</h2>
           <RestaurantList listData={restaurants}/>
         </div>
+        <button onClick={submit}>clicjk, hgtr</button>
       </div>
     </div>
   )
