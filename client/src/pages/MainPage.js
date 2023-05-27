@@ -3,8 +3,9 @@ import Title from '../components/Title'
 import UserInput from '../components/UserInput'
 import '../App.css';
 import RestaurantList from '../components/RestaurantList';
+import { useLocation } from 'react-router-dom';
 
-function MainPage() {
+function MainPage(props) {
   // const [data, setData] = useState([{}])
 
   // useEffect (() => {
@@ -17,6 +18,12 @@ function MainPage() {
   //     }
   //   )
   // }, [])
+  const location = useLocation();
+  //the data here will be an object since an object was
+  const data = location.state;
+  console.log(data);
+  const sessionCode = data.sessionCode;
+  const username = data.username;
 
   const [checkedList, setCheckedList] = useState([]);
 
@@ -46,8 +53,6 @@ function MainPage() {
     { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine"},
   ]
 
-  const sessionCode = "ABCDE1"
-
   useEffect(() => {
     console.log(checkedList)
   }, [checkedList])
@@ -59,11 +64,12 @@ function MainPage() {
 
   return (
     <div className='App'>
+      <p>Welcome, {username}!</p>
       <p>Session Code: {sessionCode}</p>
       <div className='container'>
         <div className='column'>
           <UserInput name='Cuisine' listData={cuisineList} checkedList={checkedList} setCheckedList={setCheckedList} />
-          {/*<UserInput name='Price' listData={priceList} checkedList={checkedList} setCheckedList={setCheckedList} />*/}
+          <UserInput name='Price' listData={priceList} checkedList={checkedList} setCheckedList={setCheckedList} />
           <button onClick={submit}>Submit Preferences</button>
         </div>
         <div className='column'>

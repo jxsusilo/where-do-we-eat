@@ -3,7 +3,8 @@ import './App.css';
 import MainPage from './pages/MainPage';
 import Login from './pages/Login';
 import Title from './components/Title';
-import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
+import NewSession from './pages/NewSession';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   // const [data, setData] = useState([{}])
@@ -37,8 +38,10 @@ function App() {
       <Title/>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Navigate to="login" />}/>
           <Route path="main" element={<MainPage />} />
           <Route path="login" element={<Login />} />
+          <Route path="new-session" element={<NewSession />} />
         </Routes>
       </BrowserRouter>
     </div>
