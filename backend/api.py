@@ -74,7 +74,7 @@ class FoodPicker:
                 with open(script_path.joinpath("mock.json"), "r") as f:
                     results = json.load(f)
                     data = self.filter(cuisine, results)
-                    return results
+                    return data
             except FileNotFoundError:
                 return "Error: mock.json file not found"
         else: 

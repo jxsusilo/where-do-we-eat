@@ -39,9 +39,9 @@ class Room:
         if len(api_key) > 0:
             p.set_api_key(api_key)
         data = p.result(cuisine, price)
+        print(type(data))
+        # dictionary type, when it should be list
         self._restaurants = data
-        return data
-
 
     def update_data(self):
         global rooms
