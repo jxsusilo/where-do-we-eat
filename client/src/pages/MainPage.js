@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Title from '../components/Title'
+//import Title from '../components/Title'
 import UserInput from '../components/UserInput'
 import '../App.css';
 import RestaurantList from '../components/RestaurantList';
@@ -59,21 +59,15 @@ useEffect(() => {
 }, [checkedList]);
 
 const submit = () => {
-  console.log('hgtuyvj');
-  fetch('http:http://127.0.0.1:5000/' + sessionCode, {
+  fetch('http://127.0.0.1:5000/submit', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ checked: checkedList })
+  }).then(res => res.json()).then(response => {
+    console.log(response)
   })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
 };
 
   return (
