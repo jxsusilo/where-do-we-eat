@@ -1,10 +1,17 @@
 #api.py
+import sys
+import os
+
+# Add the project root directory to the Python path
+root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(root_path)
+
 from pathlib import Path
 script_path = Path(__file__, '..').resolve()
 import json 
 import urllib.parse
 from pip._vendor import requests
-from restaurant import Restaurant
+from backend.restaurant import Restaurant
 
 cuisines = {
             'american',
