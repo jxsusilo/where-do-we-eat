@@ -63,6 +63,7 @@ class FoodPicker:
             results = self.filter(cuisine, json.loads(data))
             yield from results
 
+    
     def filter(self, cuisine, data: json):
         if "businesses" in data: 
             for res in data['businesses']:
@@ -80,3 +81,5 @@ class FoodPicker:
                     price = None
                 location = res['location']['display_address']
                 yield name, image_url, cuisine, price, rating, location
+        else: 
+            yield "Data could not be retrieved."
