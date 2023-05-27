@@ -5,9 +5,8 @@ import os
 # Add the project root directory to the Python path
 root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(root_path)
-
+from restaurant import Restaurant 
 from backend.api import FoodPicker 
-
 
 #global dictionary
 rooms = {
@@ -40,8 +39,9 @@ class Room:
         if len(api_key) > 0:
             p.set_api_key(api_key)
         data = p.result(cuisine, price)
-        return data
-
+        print(type(data))
+        # dictionary type, when it should be list
+        self._restaurants = data
 
     def update_data(self):
         global rooms
@@ -59,7 +59,10 @@ class Room:
             if cui == cuisine.lower(): 
                 self._cuisines[cui] += 1
 
-    def add_restaurant(self, restaurant: str):
+    def add_restaurant(self, restaurant: Restaurant):
         self._restaurants.append(restaurant)
 
+    def restaurant_list(self):
+        for r in self._restaurants: 
+            print(r.all())
     
