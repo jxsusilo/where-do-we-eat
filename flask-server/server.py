@@ -25,13 +25,15 @@ def members():
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.get_json()  # Get the JSON data from the request
-    checked_list = data.get('checked')
-    print(checked_list)
+    checked_cuisine_list = data.get('checkedCuisine')
+    checked_price_list = data.get('checkedPrice')
+    room_code = data.get('roomCode')
+    print(checked_cuisine_list, checked_price_list, room_code)
     restaurant_set = list()
 
-    roomvar = generator.Room("irvine")
-    for a in roomvar.result(checked_list[0],['$', '$$', '$$$', '$$$$']):
-        restaurant_set.append(a)
+    # roomvar = generator.Room("irvine", 'adkjhkfh')
+    # for a in roomvar.result(checked_list[0],['$', '$$', '$$$', '$$$$']):
+    #     restaurant_set.append(a)
 
     response = {'message': 'Data received successfully', 'info':restaurant_set}
     return response, 200

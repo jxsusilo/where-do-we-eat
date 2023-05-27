@@ -25,7 +25,8 @@ function MainPage(props) {
   const sessionCode = data.sessionCode;
   const username = data.username;
 
-  const [checkedList, setCheckedList] = useState([]);
+  const [checkedListCuisine, setCheckedListCuisine] = useState([]);
+  const [checkedListPrice, setCheckedListPrice] = useState([]);
 
   const cuisineList = [
     { id: "1", value: "American" },
@@ -68,8 +69,9 @@ function MainPage(props) {
 
 
 useEffect(() => {
-  console.log(checkedList);
-}, [checkedList]);
+  console.log(checkedListCuisine, checkedListPrice);
+  console.log(JSON.stringify({ checkedCuisine: checkedListCuisine, checkedPrice: checkedListPrice }));
+}, [checkedListCuisine, checkedListPrice]);
 
 const submit = () => {
   fetch('http://127.0.0.1:5000/submit', {
@@ -77,7 +79,7 @@ const submit = () => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ checked: checkedList })
+    body: JSON.stringify({ checkedCuisine: checkedListCuisine, checkedPrice: checkedListPrice, roomCode: sessionCode })
   }).then(res => res.json()).then(response => {
     console.log(response)
   })
@@ -90,8 +92,8 @@ const submit = () => {
       <div className='container'>
         <div className='column' id='column1'>
           <h2>Enter Your Preferences:</h2>
-          <UserInput name='Cuisine' listData={cuisineList} checkedList={checkedList} setCheckedList={setCheckedList} />
-          <UserInput name='Price' listData={priceList} checkedList={checkedList} setCheckedList={setCheckedList} />
+          <UserInput name='Cuisine' listData={cuisineList} checkedList={checkedListCuisine} setCheckedList={setCheckedListCuisine} />
+          <UserInput name='Price' listData={priceList} checkedList={checkedListPrice} setCheckedList={setCheckedListPrice} />
           <br></br>
           <button onClick={submit}>SUBMIT</button>
         </div>
