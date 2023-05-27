@@ -1,20 +1,6 @@
 from api import FoodPicker
 from generator import Room
 
-"""
-def main():
-    key = input("Enter key, or nothing if desired: ")
-    if key: 
-        location = input("Enter location: ")
-        cuisine = input("Enter cuisine: ")
-
-        p = FoodPicker(location, cuisine)
-        p.set_api_key(key)
-    else: 
-        p = FoodPicker()
-    
-    print(p.result())
-"""
 
 def main(): 
     location = input("Enter location: ")
@@ -24,10 +10,11 @@ def main():
     for p in pars: 
         room.add_particpant(p)
 
-    prices = ['$', '$$']
-    a = room.result('italian', prices) 
+    prices = ['$', '$$', '$$$', '$$$$']
+    results = room.result('american', prices) 
 
-    for item in a: 
-        print(item)
+
+    for r in results: 
+        print(r.location)
     
     
