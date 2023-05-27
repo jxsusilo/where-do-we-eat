@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Title from './components/Title'
 import UserInput from './components/UserInput'
 import './App.css';
+import RestaurantList from './components/RestaurantList';
 
 function App() {
   // const [data, setData] = useState([{}])
@@ -51,6 +52,7 @@ function App() {
         </div>
         <div className='column'>
           <h2>Results</h2>
+          <RestaurantList listData={restaurants}/>
         </div>
       </div>
     </div>
