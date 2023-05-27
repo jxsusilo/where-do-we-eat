@@ -67,7 +67,8 @@ class Room:
             restaurant.downvote()
         elif (direction > 0):
             restaurant.upvote()
-        self.vote_cuisine(restaurant.cuisine)
+            self.vote_cuisine(restaurant.cuisine)
+        
 
     def show_restaurant_list(self):
         desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)

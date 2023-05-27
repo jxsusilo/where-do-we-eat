@@ -37,4 +37,6 @@ def main():
                 room1.vote(number, -1)
             elif letter.upper() == 'U': 
                 room1.vote(number, 1)
+        
+        print(room1._cuisines.items())
     
