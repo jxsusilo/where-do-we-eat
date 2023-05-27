@@ -7,7 +7,7 @@ def code() -> str:
     MAX_LEN = 6
     while True: 
         res = ''.join(random.choices(string.ascii_uppercase +
-                            string.digits, k=MAX_LEN))
+                string.digits, k=MAX_LEN))
         if not(res in rooms.keys()):
             return str(res)
             
@@ -20,10 +20,19 @@ def main():
         new_session = Room(location, room_code)
         rooms[room_code] = new_session
     
-    room = rooms[room_code]
-    prices = ['$', '$$', '$$$', '$$$$']
-    results = room.result('american', prices) 
-    for r in results: 
-        print(r.all())
+    room1 = rooms[room_code]
+    #prices = ['$', '$$', '$$$', '$$$$']
+    prices = ['$$$$']
+    room1.result('american', prices) 
+    room1.restaurant_list()
+
+    
+
+    """
+    for every restaurant in results: 
+    if restaurant A is 'liked'
+    get the cuisine of that restaurant
+    incrememnt the count of that cuisine by 1 
+    """
     
     

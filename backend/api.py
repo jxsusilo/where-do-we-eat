@@ -58,8 +58,17 @@ class FoodPicker:
         params = {'location': self._location, 'categories': cuisine, 'sort_by': 'best_match', 'limit': self._MAX_RESULTS}
         temp = urllib.parse.urlencode(params) + self.translate_price(price)
         return self._base_url +'?'+ temp
+    
+    def cuisine_from_list(self, cuisine: list['str'], price: list[str]): 
+        total = []
+        for c in cuisine: 
+            results = self.result(c, price)
+            if type(results) == list: 
+                total.extend(results)
+        return total 
 
-    def result(self, cuisine: str, price: list[str]) -> 'set(tuple)': 
+
+    def result(self, cuisine: str, price: list[str]) -> list[Restaurant] | str: 
         if not self._api_key:  
             try: 
                 with open(script_path.joinpath("mock.json"), "r") as f:
