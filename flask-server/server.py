@@ -28,11 +28,11 @@ def submit():
     checked_list = data.get('checked')
     print(checked_list)
     
-    for food_item in checked_list: 
-        roomvar = generator.Room("irvine")
-        print(roomvar.result(food_item))
+    roomvar = generator.Room("irvine")
+    for a in roomvar.result(checked_list[0],['$', '$$', '$$$', '$$$$']):
+        print(a)
 
-    response = {'message': 'Data received successfully'}
+    response = {'message': 'Data received successfully', 'info':a[0]}
     return response, 200
 
 if __name__ == '__main__':
