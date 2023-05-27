@@ -6,3 +6,6 @@ class Restaurant:
         self.price = price
         self.rating = rating
         self.location = location 
+
+    def all(self):
+        return vars(self)
