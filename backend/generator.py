@@ -9,6 +9,8 @@ rooms = {
     
 def code() -> str: 
     '''Returns a room code of length max_len'''
+    # would be nice to add checks to make sure the code 
+    # doesn't already exist in the room 
     MAX_LEN = 6
     res = ''.join(random.choices(string.ascii_uppercase +
                             string.digits, k=MAX_LEN))
@@ -47,7 +49,6 @@ class Room:
     def vote_cuisine(self, cuisine):
         for cui, count in self._cuisines.items(): 
             if cui == cuisine.lower(): 
-                print(cui)
                 self._cuisines[cui] += 1
 
     def add_restaurant(self, restaurant: str):
