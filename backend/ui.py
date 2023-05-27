@@ -24,15 +24,17 @@ def main():
     #prices = ['$', '$$', '$$$', '$$$$']
     prices = ['$$$$']
     room1.result('american', prices) 
-    room1.restaurant_list()
 
-    
-
-    """
-    for every restaurant in results: 
-    if restaurant A is 'liked'
-    get the cuisine of that restaurant
-    incrememnt the count of that cuisine by 1 
-    """
-    
+    while True: 
+        room1.show_restaurant_list()
+        option = input('Enter D/U and integer option to vote: \n')
+        if len(option) == 0:
+            return 
+        else: 
+            letter = option[0].strip()
+            number = int(option[1:].strip())
+            if letter.upper() == 'D': 
+                room1.vote(number, -1)
+            elif letter.upper() == 'U': 
+                room1.vote(number, 1)
     

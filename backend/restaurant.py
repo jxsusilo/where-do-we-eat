@@ -8,10 +8,10 @@ class Restaurant:
         self.location = location 
         self.votes = 0
 
-    def upvote_restaurant(self):
+    def upvote(self):
         self.votes += 1
 
-    def downvote_restaurant(self):
+    def downvote(self):
         self.votes -= 1
 
     def all(self):
