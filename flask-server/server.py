@@ -21,7 +21,7 @@ def index():
 def members():
     return jsonify({"members": ["Member1", "Member2", "Member3"]})
 
-
+#they don't have a session id~
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.get_json()  # Get the JSON data from the request
@@ -37,6 +37,10 @@ def submit():
     return response, 200
 
 
+# if they already have a session id getting/updating
+@app.route('/:sessionCode',methods=['GET'])
+def getdata(sessionCode):
+    return generator.rooms[sessionCode]
 
 
 if __name__ == '__main__':
