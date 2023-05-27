@@ -1,4 +1,5 @@
 # session.py
+
 from api import FoodPicker 
 import string
 import random
@@ -7,9 +8,6 @@ import random
 rooms = {
 
 }
-    
-
-
 
 class Room:
     def __init__(self, location):
@@ -32,9 +30,10 @@ class Room:
         }
 
     def result(self, cuisine: str): 
-        print('accessed')
         p = FoodPicker(self._location)
-        data = p.get_restaurant_info(cuisine)
+        api_key = input("Enter apikey: ")
+        p.set_api_key(api_key)
+        data = p.result(cuisine)
         yield from data
 
 

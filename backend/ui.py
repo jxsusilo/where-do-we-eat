@@ -27,13 +27,3 @@ def main():
     a = room.result('italian') 
     for item in a: 
         print(item)
-
-    
-    """
-    foodpicker = FoodPicker(location)
-    api_key = input("Enter apikey: ")
-    foodpicker.set_apikey = api_key
-    results = foodpicker.get_restaurant_info("italian")
-    print(results)
-    """
-
