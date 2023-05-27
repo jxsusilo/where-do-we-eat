@@ -4,6 +4,20 @@ import json
 import urllib.parse
 from pip._vendor import requests
 
+cuisines = {
+            'american',
+            'chinese',
+            'greek',
+            'indian',
+            'italian',
+            'japanese',
+            'korean',
+            'mexican',
+            'nigerian',
+            'thai',
+            'vietnamese'
+        }
+
 class FoodPicker:
     def __init__(self, location = None):
         self._base_url = 'https://api.yelp.com/v3/businesses/search'
@@ -31,21 +45,33 @@ class FoodPicker:
 
     def result(self, cuisine: str) -> str: 
         if not self._api_key:  
-            with open('mock.json', "r") as f:
+            with open('/Users/alvinachow/Downloads/where-do-we-eat/backend/mock.json', "r") as f:
                 data = json.load(f)
             return data
         else: 
             response = requests.get(self.url(cuisine), headers=self.header())
             return response.text
-    
-    def get_resturant_info(data):
-        if "businesses" in data:
-            resturant = data['business'][0]
-            name = resturant['name']
-            image_url = resturant['image_url']
-            cuisine = resturant['categories']['alias']
-            rating = resturant['rating']
-            price = resturant['price']
-            location = resturant['location']['display_address']
 
-            return name, image_url, cuisine, rating, price, location
+    def get_restaurant_info(self, cuisine):
+        data = self.result(cuisine)
+        
+        if "businesses" in data: 
+            for res in data['businesses']:
+
+                name = res['name']
+                image_url = res['image_url']
+                categories = res["categories"]
+                for category in categories:
+                    alias = category["alias"]
+                    if alias in cuisines:
+                        cuisine = alias
+                rating = res['rating']
+
+                try: 
+                    price = res['price']
+                except KeyError: 
+                    price = None
+
+                location = res['location']['display_address']
+
+                yield name, image_url, cuisine, price, rating, location
