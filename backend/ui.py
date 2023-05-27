@@ -24,6 +24,10 @@ def main():
     for p in pars: 
         room.add_particpant(p)
 
-    a = room.result('italian') 
+    prices = ['$', '$$']
+    a = room.result('italian', prices) 
+
     for item in a: 
         print(item)
+    
+    

@@ -29,11 +29,11 @@ class Room:
             'vietnamese': 0
         }
 
-    def result(self, cuisine: str): 
+    def result(self, cuisine: str, price: list[str]): 
         p = FoodPicker(self._location)
         api_key = input("Enter apikey: ")
         p.set_api_key(api_key)
-        data = p.result(cuisine)
+        data = p.result(cuisine, price)
         yield from data
 
 

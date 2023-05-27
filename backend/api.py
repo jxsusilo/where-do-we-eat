@@ -35,23 +35,30 @@ class FoodPicker:
                    "Authorization": key_phrase}
         return headers
         
-    def url(self, cuisine: str): 
+    def translate_price(self, price: list[str]) -> str: 
+        int_rep = [len(x) for x in price]
+        params = '&'
+        for p in int_rep: 
+            params += 'price='+ str(p)+ '&'
+        return params[:-1]
+
+    def url(self, cuisine: str, price: list): 
         # limit will change based on cuisine
         # let's say 10 ppl are deciding, 6 ppl choose italian and 4 ppl choose american
         # we'd wanna display 6 italian results and 4 american results 
 
         params = {'location': self._location, 'categories': cuisine, 'sort_by': 'best_match', 'limit': self._MAX_RESULTS}
-        temp = urllib.parse.urlencode(params)
+        temp = urllib.parse.urlencode(params) + self.translate_price(price)
         return self._base_url +'?'+ temp
 
-    def result(self, cuisine: str) -> str: 
+    def result(self, cuisine: str, price: list[str]) -> str: 
         if not self._api_key:  
             with open(script_path.joinpath("mock.json"), "r") as f:
                 results = json.load(f)
                 data = self.filter(cuisine, results)
                 yield from data
         else: 
-            response = requests.get(self.url(cuisine), headers=self.header())
+            response = requests.get(self.url(cuisine, price), headers=self.header())
             data = response.text
             results = self.filter(cuisine, json.loads(data))
             yield from results
