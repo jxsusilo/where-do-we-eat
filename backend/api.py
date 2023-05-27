@@ -4,6 +4,7 @@ script_path = Path(__file__, '..').resolve()
 import json 
 import urllib.parse
 from pip._vendor import requests
+from restaurant import Restaurant
 
 cuisines = {
             'american',
@@ -42,7 +43,7 @@ class FoodPicker:
             params += 'price='+ str(p)+ '&'
         return params[:-1]
 
-    def url(self, cuisine: str, price: list): 
+    def url(self, cuisine: str, price: list) -> str: 
         # limit will change based on cuisine
         # let's say 10 ppl are deciding, 6 ppl choose italian and 4 ppl choose american
         # we'd wanna display 6 italian results and 4 american results 
@@ -51,21 +52,27 @@ class FoodPicker:
         temp = urllib.parse.urlencode(params) + self.translate_price(price)
         return self._base_url +'?'+ temp
 
-    def result(self, cuisine: str, price: list[str]) -> str: 
+    def result(self, cuisine: str, price: list[str]) -> 'set(tuple)': 
         if not self._api_key:  
-            with open(script_path.joinpath("mock.json"), "r") as f:
-                results = json.load(f)
-                data = self.filter(cuisine, results)
-                yield from data
+            try: 
+                with open(script_path.joinpath("mock.json"), "r") as f:
+                    results = json.load(f)
+                    data = self.filter(cuisine, results)
+                    return results
+            except FileNotFoundError:
+                return "Error: mock.json file not found"
         else: 
-            response = requests.get(self.url(cuisine, price), headers=self.header())
-            data = response.text
-            results = self.filter(cuisine, json.loads(data))
-            yield from results
-
+            try: 
+                response = requests.get(self.url(cuisine, price), headers=self.header())
+                data = response.text
+                results = self.filter(cuisine, json.loads(data))
+                return results
+            except requests.RequestException as e:
+                return ("Error: ", e)
     
-    def filter(self, cuisine, data: json):
+    def filter(self, cuisine, data: json) -> list[Restaurant]:
         if "businesses" in data: 
+            results = []
             for res in data['businesses']:
                 name = res['name']
                 image_url = res['image_url']
@@ -80,6 +87,8 @@ class FoodPicker:
                 except KeyError: 
                     price = None
                 location = res['location']['display_address']
-                yield name, image_url, cuisine, price, rating, location
+
+                results.append(Restaurant(name, image_url, cuisine, price, rating, location))
+            return results
         else: 
-            yield "Data could not be retrieved."
+            return "Data could not be retrieved."

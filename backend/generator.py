@@ -35,7 +35,7 @@ class Room:
         if len(api_key) > 0:
             p.set_api_key(api_key)
         data = p.result(cuisine, price)
-        yield from data
+        return data
 
 
     def update_data(self):
