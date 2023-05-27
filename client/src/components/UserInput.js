@@ -18,7 +18,7 @@ function UserInput(props) {
 
     return (
         <div className="UserInput">
-            <h2>{props.name}</h2>
+            <h3>{props.name}</h3>
             <div className="card-body">
                 {props.listData.map((item, index) => {
                     return (
