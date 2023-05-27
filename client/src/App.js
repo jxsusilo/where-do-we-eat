@@ -35,15 +35,19 @@ function App() {
 
   return (
     <div className='App'>
-      <Title/>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="login" />}/>
-          <Route path="main" element={<MainPage />} />
-          <Route path="login" element={<Login />} />
-          <Route path="new-session" element={<NewSession />} />
-        </Routes>
-      </BrowserRouter>
+      <div className='header'>
+        <Title/>
+      </div>
+      <div className='content'>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Navigate to="login" />}/>
+            <Route path="main" element={<MainPage />} />
+            <Route path="login" element={<Login />} />
+            <Route path="new-session" element={<NewSession />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </div>
   )
 }

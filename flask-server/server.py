@@ -27,13 +27,17 @@ def submit():
     data = request.get_json()  # Get the JSON data from the request
     checked_list = data.get('checked')
     print(checked_list)
-    
+    restaurant_set = list()
+
     roomvar = generator.Room("irvine")
     for a in roomvar.result(checked_list[0],['$', '$$', '$$$', '$$$$']):
-        print(a)
+        restaurant_set.append(a)
 
-    response = {'message': 'Data received successfully', 'info':a[0]}
+    response = {'message': 'Data received successfully', 'info':restaurant_set}
     return response, 200
+
+
+
 
 if __name__ == '__main__':
     app.run()

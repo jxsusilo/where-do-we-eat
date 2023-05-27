@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,500&family=Yeseva+One&display=swap');
+
+.App {
+  font-family: 'Poppins';
+  color: #241623;
+}
+
+.content {
+  padding-left: 5%;
+}
+
 .container {
   display: flex;
   justify-content: flex-start;
@@ -5,4 +16,73 @@
 
 .column {
   flex-basis:  20%;
+}
+
+#column1 {
+  border-right:1px solid #241623;
+}
+
+#column2 {
+  border-right:1px solid #241623;
+  margin-left: 3%;
+  padding-right: 30%;
+}
+
+#column3 {
+  margin-left: 3%;
+}
+
+.header {
+  background-color: #E8871E;
+  padding: 1% 0%;
+  border: 0;
+  margin: 0;
+  font-size: xx-large;
+}
+
+h1 {
+  color: white;
+  font-family: 'Yeseva One';
+  transition: opacity 2s;
+}
+
+h2 {
+  font-family: 'Yeseva One';
+}
+
+button {
+  padding: 2vh;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 50px;
+  transition: ease-out 0.3s;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #E8871E;
+}
+
+button:active {
+  background-color: #6C8EAD;
+  transition: none;
+  color: white;
+}
+
+.restaurant {
+  background-color: #E8871E;
+  border-radius: 25px;
+  width: 200%;
+  padding: 5%;
+  margin-bottom: 5%;
+  display: flex;
+}
+
+.resto-img {
+  width: 50%
+}
+
+.resto-info {
+  margin-left: 5%;
+  color: white;
 }
