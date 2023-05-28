@@ -34,7 +34,6 @@ class Room:
         }
         self.update_data()
 
-<<<<<<< HEAD
     def result(self, cuisine: str, price: list[str], number): 
         p = FoodPicker(self._location)
         #api_key = input("Enter apikey: ")
@@ -42,7 +41,7 @@ class Room:
             #p.set_api_key(api_key)
         data = p.result(cuisine, price, number)
         self._restaurants.extend(data)
-=======
+
     def result(self, cuisine: list[str], price: list[str]): 
         p = FoodPicker(self._location)
         api_key = input("Enter apikey: ")
