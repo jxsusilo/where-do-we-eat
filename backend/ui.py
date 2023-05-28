@@ -1,5 +1,6 @@
 import sys
 import os
+import math
 
 # Add the project root directory to the Python path
 root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,33 +18,61 @@ def code() -> str:
                 string.digits, k=MAX_LEN))
         if not(res in rooms.keys()):
             return str(res)
-            
-
-def main(): 
+        
+def logistics(): 
     location = input("Enter location: ")
     room_code = input("Enter code, or one will be generated (press enter): ")
     if len(room_code) == 0: 
         room_code = code()
         new_session = Room(location, room_code)
         rooms[room_code] = new_session
-    
     room1 = rooms[room_code]
-    #prices = ['$', '$$', '$$$', '$$$$']
-    prices = ['$$$$']
-    room1.result('american', prices) 
+    return room1
+            
+def prices(): 
+    price = ['$', '$$', '$$$', '$$$$']
+    maximum = int(input('Up to how many dollar signs would you like? (1-4): '))
+    return price[:maximum-1]
 
+def ask_cuisine(room: Room): 
+    total = set()
     while True: 
-        room1.show_restaurant_list()
-        option = input('Enter D/U and integer option to vote: \n')
-        if len(option) == 0:
-            return 
+        cuisine = input('What cuisine would you like? ')
+        if len(cuisine) == 0: 
+            return total 
         else: 
-            letter = option[0].strip()
-            number = int(option[1:].strip())
-            if letter.upper() == 'D': 
-                room1.vote(number, -1)
-            elif letter.upper() == 'U': 
-                room1.vote(number, 1)
+            total.add(cuisine)
+        room.vote_cuisine(cuisine)
+
+def voting(room: Room): 
+    room.show_restaurant_list()
+    option = input('Enter D/U and integer option to vote: \n')
+    if len(option) == 0:
+        return 
+    else: 
+        letter = option[0].strip()
+        number = int(option[1:].strip())
+        if letter.upper() == 'D': 
+            room.vote(number, -1)
+        elif letter.upper() == 'U': 
+            room.vote(number, 1)
+
+def main(): 
+    MAX_CHOICES = 10
+    room1 = logistics()
+    price = prices()
+
+    all_cuisines = ask_cuisine(room1)
+    print(room1._cuisines)
+    for c in all_cuisines:
+        listings = math.ceil((room1._cuisines[c]/room1.all_votes())*10)
+        print(listings)
+        if listings > 1:
+            room1.result(c, price, listings)
+        else:
+            room1.result(c, price, MAX_CHOICES)
         
-        print(room1._cuisines.items())
+    voting(room1)
+
+    
     
