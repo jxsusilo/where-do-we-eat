@@ -146,6 +146,24 @@ def getRestaurants():
     response = jsonify({"restaurants": restaurant_list})
     print(restaurant_list)
     return response
+
+@app.route('/upvote', methods=['POST'])
+def upvote():
+    data = request.get_json()  # Get the JSON data from the request
+    name = data.get('restaurant')
+    for i in range(len(roomvar._restaurants)):
+        if roomvar._restaurants[i].name == name:
+            restraunt_index = i
+    roomvar.vote(restraunt_index, 1) 
+
+@app.route('/downvote', methods=['POST'])
+def downvote(): 
+    data = request.get_json()  # Get the JSON data from the request
+    name = data.get('restaurant')
+    for i in range(len(roomvar._restaurants)):
+        if roomvar._restaurants[i].name == name:
+            restraunt_index = i
+    roomvar.vote(restraunt_index, -1) 
     
 
 # if they already have a session id getting/updating
