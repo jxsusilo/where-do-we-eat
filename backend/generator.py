@@ -48,7 +48,7 @@ class Room:
         
     def has_same(self, obj: Restaurant) -> bool: 
         for x in self._restaurants: 
-            if obj == x:
+            if obj.name == x.name:
                 return True
         return False
         
