@@ -71,8 +71,7 @@ class FoodPicker:
                     return data
             except FileNotFoundError:
                 return "Error: mock.json file not found"
-        else: 
-            print('reached!')
+        else:
             try: 
                 response = requests.get(self.url(cuisine, price, number), headers=self.header())
                 data = response.text
