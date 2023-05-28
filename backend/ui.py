@@ -14,7 +14,7 @@ def code() -> str:
     MAX_LEN = 6
     while True: 
         res = ''.join(random.choices(string.ascii_uppercase +
-                            string.digits, k=MAX_LEN))
+                string.digits, k=MAX_LEN))
         if not(res in rooms.keys()):
             return str(res)
             
@@ -27,10 +27,23 @@ def main():
         new_session = Room(location, room_code)
         rooms[room_code] = new_session
     
-    room = rooms[room_code]
-    prices = ['$', '$$', '$$$', '$$$$']
-    results = room.result('american', prices) 
-    for r in results: 
-        print(r.all())
-    
+    room1 = rooms[room_code]
+    #prices = ['$', '$$', '$$$', '$$$$']
+    prices = ['$$$$']
+    room1.result('american', prices) 
+
+    while True: 
+        room1.show_restaurant_list()
+        option = input('Enter D/U and integer option to vote: \n')
+        if len(option) == 0:
+            return 
+        else: 
+            letter = option[0].strip()
+            number = int(option[1:].strip())
+            if letter.upper() == 'D': 
+                room1.vote(number, -1)
+            elif letter.upper() == 'U': 
+                room1.vote(number, 1)
+        
+        print(room1._cuisines.items())
     
