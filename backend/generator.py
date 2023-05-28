@@ -10,9 +10,7 @@ from backend.api import FoodPicker
 import math
 
 #global dictionary
-rooms = {
-
-}
+rooms = {}
 
 MAX_CHOICES = 10
 
@@ -40,21 +38,20 @@ class Room:
     def result(self, cuisine: str, price: list[str], number): 
         p = FoodPicker(self._location)
         data = p.result(cuisine, price, number) #new api data
+        filtered = []
         for e in data: 
-            if e.name in self.names(): 
-                data.remove(e)
-
-        data.extend(self._restaurants)
-        data = set(data)
-        data = list(data)
-        self._restaurants = sorted(data, key = lambda x: x.votes, reverse=True)[:MAX_CHOICES]
+            if not self.has_same(e):
+                filtered.append(e)
+        filtered.extend(self._restaurants)
+        filtered = filtered[:MAX_CHOICES]
+        self._restaurants = sorted(filtered, key = lambda x: x.votes, reverse=True)
         
-    def names(self): 
-        words = []
+    def has_same(self, obj: Restaurant) -> bool: 
         for x in self._restaurants: 
-            words.append(x.name)
-        return words
-    
+            if obj == x:
+                return True
+        return False
+        
     def give_final_results(self, cuisines, price) -> None: 
         for c in cuisines:
             c = c.lower()
@@ -67,7 +64,6 @@ class Room:
                 self.result(c, price, listings)
             else:
                 self.result(c, price, MAX_CHOICES)
-
 
     def update_data(self):
         global rooms
@@ -85,21 +81,12 @@ class Room:
         restaurant = self._restaurants[number-1] 
         if (direction < 0): 
             restaurant.downvote()
-            #print(restaurant)
         elif (direction > 0):
-            #print(restaurant)
-
             restaurant.upvote()
-            #print(restaurant)
 
     def show_restaurant_list(self):
-        desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
-        self._restaurants = desc
-        #print(self._restaurants)
-        #for res in self._restaurants:
-            #print(res.get_votes())
-        for r in range(len(desc)): 
-            print(r+1,') ', desc[r].name, ' (',desc[r].votes,')', sep ='')
+        for r in range(len(self._restaurants)): 
+            print(r+1,') ', self._restaurants[r].name, ' (',self._restaurants[r].votes,')', sep ='')
 
     def all_votes(self):
         total = 0 

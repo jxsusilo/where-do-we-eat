@@ -64,6 +64,3 @@ def main():
     while True: 
         room1.give_final_results(all_cuisines, price)
         voting(room1)
-
-    
-    
