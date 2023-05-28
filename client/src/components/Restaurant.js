@@ -9,6 +9,11 @@ function Restaurant(props) {
         stars += "★";
     }
 
+    useEffect(() => {
+        console.log('resetvote!');
+        setVote(0);
+      }, []);
+
     const upvote = () => {
         if (vote == 1) {
             setVote(0);
