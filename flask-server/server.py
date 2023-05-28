@@ -154,7 +154,11 @@ def upvote():
     for i in range(len(roomvar._restaurants)):
         if roomvar._restaurants[i].name == name:
             restraunt_index = i
-    roomvar.vote(restraunt_index, 1) 
+    roomvar.vote(restraunt_index+1, 1) 
+    #print(roomvar._restaurants[restraunt_index].votes)
+    #print(restraunt_index)
+    response = {'message': roomvar._restaurants[restraunt_index].votes}
+    return response, 200
 
 @app.route('/downvote', methods=['POST'])
 def downvote(): 
@@ -163,7 +167,11 @@ def downvote():
     for i in range(len(roomvar._restaurants)):
         if roomvar._restaurants[i].name == name:
             restraunt_index = i
-    roomvar.vote(restraunt_index, -1) 
+    roomvar.vote(restraunt_index+1, -1)
+    #print(roomvar._restaurants[restraunt_index].votes)
+    #print(restraunt_index) 
+    response = {'message': 'Data received successfully'}
+    return response, 200 
     
 
 # if they already have a session id getting/updating
