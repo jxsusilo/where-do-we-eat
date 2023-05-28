@@ -31,8 +31,8 @@ class FoodPicker:
     def __init__(self, location = None):
         self._base_url = 'https://api.yelp.com/v3/businesses/search'
         self._location = location
-        self._api_key = '1j0LCWQnQ5D9rmt7MG6r_sPb_fPd29p84YvLVKU70ex14TSrq1pwAkTV1_0cuox1ifBvrn5mWOcRqt_zyO3LCRqORtnSH-k5xJ15Y6c2M2DhjWOlyoKXeQ-osvByZHYx'
-    
+        self._api_key = 'AmvYShl_-WlKLIqg1eK5nErygdS6J3MeNlfUHcwkPv0h--kT9mJ_7RgnVB-8gQuj9eISD4akMq-sVG5b8W7xD3Nv6ZpGfHOwjtIpRRqMLlFeYkl3dfrnV4fE3WZzZHYx'
+
     def set_api_key(self, key):
         self._api_key = key
         
