@@ -87,6 +87,7 @@ const submit = () => {
     console.log(response)
     setRestoList(response['restaurants'])
     console.log(response)
+    alert('Submitted Preferences!')
   })
 };
 
