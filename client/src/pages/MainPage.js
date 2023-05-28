@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import UserInput from '../components/UserInput'
 import '../App.css';
 import RestaurantList from '../components/RestaurantList';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function MainPage(props) {
   // const [data, setData] = useState([{}])
@@ -117,10 +117,14 @@ const submit = () => {
     });
   }
 
-
+  const navigate = useNavigate();
+  const onBack = () => {
+    navigate('/');
+  }
 
   return (
     <div className='App'>
+      <button id='back' onClick={onBack}>BACK</button>
       <div id='intro'>
         <p>Welcome, {username}!</p>
         <p>Session Code: <span id='session-code'>{sessionCode}</span></p>

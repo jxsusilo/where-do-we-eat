@@ -7,6 +7,7 @@
 
 .content {
   padding-left: 5%;
+  padding-bottom: 5%;
 }
 
 .container {
@@ -44,6 +45,7 @@ h1 {
   color: white;
   font-family: 'Yeseva One';
   transition: opacity 2s;
+  padding-top: 5vh;
 }
 
 h2 {
@@ -139,4 +141,22 @@ button:active {
   border-radius: 20px;
   height: 3vh;
   padding-left: 1vw;
+}
+
+#back {
+  position: fixed;
+  margin-left: -4vw;
+  margin-top: -25vh;
+  background-color: #EDB458;
+  transition: ease-out 0.3s;
+}
+
+#back:hover {
+  background-color: #241623;
+  color: white;
+}
+
+#back:active {
+  background-color:#6C8EAD;
+  color: white;
 }
