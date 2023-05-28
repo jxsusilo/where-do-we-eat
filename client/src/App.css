@@ -50,6 +50,14 @@ h2 {
   font-family: 'Yeseva One';
 }
 
+.resto-name {
+  background-color: #6C8EAD;
+  padding: 5% 10%;
+  width: 20vw;
+  margin-left: 0;
+  border-radius: 30px;
+}
+
 button {
   padding: 2vh;
   margin-top: auto;
@@ -79,10 +87,20 @@ button:active {
 }
 
 .resto-img {
-  width: 50%
+  width: 50%;
+  min-width: 50%;
 }
 
 .resto-info {
   margin-left: 5%;
   color: white;
+}
+
+.stars {
+  font-size: x-large;
+}
+
+.votes {
+  margin-top: 30%;
+  font-size: xx-large;
 }
