@@ -14,6 +14,8 @@ rooms = {
 
 }
 
+MAX_CHOICES = 10
+
 class Room:
     def __init__(self, location, code):
         self._room_id = code
@@ -37,24 +39,21 @@ class Room:
 
     def result(self, cuisine: str, price: list[str], number): 
         p = FoodPicker(self._location)
-        #api_key = input("Enter apikey: ")
-        #if len(api_key) > 0:
-            #p.set_api_key(api_key)
         data = p.result(cuisine, price, number)
-        self._restaurants.extend(data)
-
-        desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
-        self._restaurants = desc
+        data.extend(self._restaurants)
+        data = set(data)
+        data = list(data)
+        self._restaurants = sorted(data, key = lambda x: x.votes, reverse=True)[:MAX_CHOICES]
+        
 
     def give_final_results(self, cuisines, price) -> None: 
-        MAX_CHOICES = 10
         for c in cuisines:
             c = c.lower()
             try: 
                 listings = math.ceil((self._cuisines[c]/(self.all_votes()))*10)
             except ZeroDivisionError: 
                 listings = MAX_CHOICES
-                
+
             if listings > 1:
                 self.result(c, price, listings)
             else:
@@ -63,10 +62,6 @@ class Room:
 
     def update_data(self):
         global rooms
-        # internal = {'participants': self._participants, 
-        #             'cuisines': self._cuisines,
-        #             'restaurants': self._restaurants
-        # }
         rooms[self._room_id] = self
 
     def add_particpant(self, participant: str):
@@ -83,7 +78,7 @@ class Room:
             restaurant.downvote()
         elif (direction > 0):
             restaurant.upvote()
-
+    
     def show_restaurant_list(self):
         desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
         self._restaurants = desc

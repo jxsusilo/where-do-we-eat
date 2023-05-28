@@ -8,10 +8,18 @@ class Restaurant:
         self.location = location 
         self.votes = 0
 
+    def __hash__(self):
+        return hash(self.name)
+    
+    def __eq__(self, other): 
+        return self.name == other.name
+
     def upvote(self):
+        print('upvote')
         self.votes += 1
 
     def downvote(self):
+        print('downvote')
         self.votes -= 1
 
     def all(self):
