@@ -40,8 +40,6 @@ class Room:
             p.set_api_key(api_key)
         data = p.cuisine_from_list(cuisine, price)
         self._restaurants = data
-        return data
-
 
     def update_data(self):
         global rooms
@@ -58,11 +56,25 @@ class Room:
         for cui, count in self._cuisines.items(): 
             if cui == cuisine.lower(): 
                 self._cuisines[cui] += 1
-
+    """
     def add_restaurant(self, restaurant: Restaurant):
         self._restaurants.append(restaurant)
+    """
 
-    def restaurant_list(self):
-        for r in self._restaurants: 
-            print(r.all())
+    def vote(self, number: int, direction: int):
+        restaurant = self._restaurants[number-1] 
+        if (direction < 0): 
+            restaurant.downvote()
+        elif (direction > 0):
+            restaurant.upvote()
+            self.vote_cuisine(restaurant.cuisine)
+        
+
+    def show_restaurant_list(self):
+        desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
+        self._restaurants = desc
+        for r in range(len(desc)): 
+            print(r+1,') ', desc[r].name, ' (',desc[r].votes,')', sep ='')
+
+    
     
