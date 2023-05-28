@@ -9,6 +9,13 @@ function NewSession() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        fetch('http://127.0.0.1:5000/setup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ roomcode: 0, location: loc})
+  })
         navigate('/main', {state: {
           sessionCode: '(RANDOMLY GENERATED CODE)',
           username: name,
