@@ -42,6 +42,9 @@ class Room:
             #p.set_api_key(api_key)
         data = p.result(cuisine, price, number)
         self._restaurants.extend(data)
+        
+        desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
+        self._restaurants = desc
 
     def give_final_results(self, cuisines, price) -> None: 
         MAX_CHOICES = 10
