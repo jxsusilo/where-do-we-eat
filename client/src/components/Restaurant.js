@@ -10,34 +10,47 @@ function Restaurant(props) {
     }
 
     const upvote = () => {
-        fetch('http://127.0.0.1:5000/upvote', {
+        if (vote == 1) {
+            setVote(0);
+            fetch('http://127.0.0.1:5000/downvote', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
         },
         body: JSON.stringify({ restaurant: props.resto.name})
     })
-        
-        if (vote == 1) {
-            setVote(0);
         } else {
             setVote(1);
+            fetch('http://127.0.0.1:5000/upvote', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ restaurant: props.resto.name})
+    })
         }
         console.log(vote);
     }
 
     const downvote = () => {
-        fetch('http://127.0.0.1:5000/downvote', {
+        if (vote == -1) {
+            setVote(0);
+            fetch('http://127.0.0.1:5000/upvote', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'
         },
         body: JSON.stringify({ restaurant: props.resto.name})
     })
-        if (vote == -1) {
-            setVote(0);
         } else {
             setVote(-1);
+            fetch('http://127.0.0.1:5000/downvote', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ restaurant: props.resto.name})
+    })
         }
         console.log(vote);
     }
