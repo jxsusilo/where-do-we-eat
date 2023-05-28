@@ -5,7 +5,7 @@ import os
 # Add the project root directory to the Python path
 root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(root_path)
-from restaurant import Restaurant 
+from backend.restaurant import Restaurant 
 from backend.api import FoodPicker 
 
 #global dictionary
@@ -34,6 +34,7 @@ class Room:
         }
         self.update_data()
 
+<<<<<<< HEAD
     def result(self, cuisine: str, price: list[str], number): 
         p = FoodPicker(self._location)
         #api_key = input("Enter apikey: ")
@@ -41,6 +42,15 @@ class Room:
             #p.set_api_key(api_key)
         data = p.result(cuisine, price, number)
         self._restaurants.extend(data)
+=======
+    def result(self, cuisine: list[str], price: list[str]): 
+        p = FoodPicker(self._location)
+        api_key = input("Enter apikey: ")
+        if len(api_key) > 0:
+            p.set_api_key(api_key)
+        data = p.cuisine_from_list(cuisine, price)
+        self._restaurants = data
+>>>>>>> refs/remotes/origin/main
 
     def update_data(self):
         global rooms
