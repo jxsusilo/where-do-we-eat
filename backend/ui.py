@@ -62,9 +62,5 @@ def main():
     price = prices()
     all_cuisines = ask_cuisine(room1)
     while True: 
-        print(room1._cuisines)
         room1.give_final_results(all_cuisines, price)
         voting(room1)
-
-    
-    

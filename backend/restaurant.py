@@ -15,12 +15,13 @@ class Restaurant:
         return self.name == other.name
 
     def upvote(self):
-        print('upvote')
         self.votes += 1
 
     def downvote(self):
-        print('downvote')
         self.votes -= 1
+
+    def get_votes(self):
+        return self.votes
 
     def all(self):
         return vars(self)

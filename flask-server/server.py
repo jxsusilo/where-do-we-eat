@@ -30,6 +30,7 @@ def roomGeneration():
     global roomCode
     global room_flag
     
+    
 
     data = request.get_json()  # Get the JSON data from the request
     location = data.get('location')
@@ -62,6 +63,7 @@ def roomGeneration():
 #preferences with a session id
 @app.route('/submit', methods=['POST'])
 def submit():
+    global checked_price_list
     data = request.get_json()  # Get the JSON data from the request
     checked_cuisine_list = data.get('checkedCuisine')
     checked_price_list = data.get('checkedPrice')
@@ -82,6 +84,8 @@ def submit():
     roomvar = generator.rooms[room_code]
     #print(generator.rooms)
     #print(roomvar)
+    for cuisine in checked_cuisine_list:
+        roomvar.vote_cuisine(cuisine)
     results = roomvar.give_final_results(checked_cuisine_list, checked_price_list)
     for r in roomvar._restaurants:
         print(r.name)
@@ -154,10 +158,19 @@ def upvote():
     for i in range(len(roomvar._restaurants)):
         if roomvar._restaurants[i].name == name:
             restraunt_index = i
+    cusine_lst = [name for name,val in roomvar._cuisines.items() if val >= 1]
     roomvar.vote(restraunt_index+1, 1) 
-    #print(roomvar._restaurants[restraunt_index].votes)
-    #print(restraunt_index)
-    response = {'message': roomvar._restaurants[restraunt_index].votes}
+    roomvar.give_final_results(cusine_lst,checked_price_list)
+    #print(roomvar._cuisines.items())
+    #print(checked_price_list)
+    roomvar.show_restaurant_list()
+    
+    restaurant_list = list()
+    for r in roomvar._restaurants:
+        restaurant_list.append(r.all())
+     
+    response = jsonify({"restaurants": restaurant_list})
+    #print(restaurant_list)
     return response, 200
 
 @app.route('/downvote', methods=['POST'])
@@ -168,10 +181,19 @@ def downvote():
         if roomvar._restaurants[i].name == name:
             restraunt_index = i
     roomvar.vote(restraunt_index+1, -1)
-    #print(roomvar._restaurants[restraunt_index].votes)
-    #print(restraunt_index) 
-    response = {'message': 'Data received successfully'}
-    return response, 200 
+    cusine_lst = [name for name,val in roomvar._cuisines.items() if val >= 1]
+    roomvar.give_final_results(cusine_lst,checked_price_list)
+    #print(roomvar._cuisines.items())
+    #print(checked_price_list)
+    roomvar.show_restaurant_list()
+    
+    restaurant_list = list()
+    for r in roomvar._restaurants:
+        restaurant_list.append(r.all())
+     
+    response = jsonify({"restaurants": restaurant_list})
+    #print(restaurant_list)
+    return response, 200
     
 
 # if they already have a session id getting/updating

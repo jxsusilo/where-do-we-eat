@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import UserInput from '../components/UserInput'
 import '../App.css';
 import RestaurantList from '../components/RestaurantList';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function MainPage(props) {
   // const [data, setData] = useState([{}])
@@ -87,6 +87,7 @@ const submit = () => {
     console.log(response)
     setRestoList(response['restaurants'])
     console.log(response)
+    alert('Submitted Preferences!')
   })
 };
 
@@ -116,12 +117,18 @@ const submit = () => {
     });
   }
 
-
+  const navigate = useNavigate();
+  const onBack = () => {
+    navigate('/');
+  }
 
   return (
     <div className='App'>
-      <p>Welcome, {username}!</p>
-      <p>Session Code: {sessionCode}</p>
+      <button id='back' onClick={onBack}>BACK</button>
+      <div id='intro'>
+        <p>Welcome, {username}!</p>
+        <p>Session Code: <span id='session-code'>{sessionCode}</span></p>
+      </div>
       <div className='container'>
         <div className='column' id='column1'>
           <h2>Enter Your Preferences:</h2>

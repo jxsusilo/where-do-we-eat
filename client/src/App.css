@@ -7,6 +7,7 @@
 
 .content {
   padding-left: 5%;
+  padding-bottom: 5%;
 }
 
 .container {
@@ -44,6 +45,7 @@ h1 {
   color: white;
   font-family: 'Yeseva One';
   transition: opacity 2s;
+  padding-top: 5vh;
 }
 
 h2 {
@@ -58,20 +60,31 @@ h2 {
   border-radius: 30px;
 }
 
-button {
+button,.submit {
   padding: 2vh;
   margin-top: auto;
   margin-bottom: auto;
   border-radius: 50px;
   transition: ease-out 0.3s;
   font-weight: bold;
+  border-color: #E8871E;
 }
 
 button:hover {
   background-color: #E8871E;
 }
 
+.submit:hover {
+  background-color: #E8871E;
+}
+
 button:active {
+  background-color: #6C8EAD;
+  transition: none;
+  color: white;
+}
+
+.submit:active {
   background-color: #6C8EAD;
   transition: none;
   color: white;
@@ -103,4 +116,47 @@ button:active {
 .votes {
   margin-top: 30%;
   font-size: xx-large;
+}
+
+#intro {
+  background-color: #6C8EAD;
+  color: white;
+  width: 15vw;
+  padding: 1vw 2vw;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+#session-code {
+  background-color:#E8871E;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.submit {
+  margin-top: 3vh;
+}
+
+.textbox {
+  border-radius: 20px;
+  height: 3vh;
+  padding-left: 1vw;
+}
+
+#back {
+  position: fixed;
+  margin-left: -4vw;
+  margin-top: -25vh;
+  background-color: #EDB458;
+  transition: ease-out 0.3s;
+}
+
+#back:hover {
+  background-color: #241623;
+  color: white;
+}
+
+#back:active {
+  background-color:#6C8EAD;
+  color: white;
 }
