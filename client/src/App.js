@@ -4,7 +4,7 @@ import MainPage from './pages/MainPage';
 import Login from './pages/Login';
 import Title from './components/Title';
 import NewSession from './pages/NewSession';
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, HashRouter } from "react-router-dom";
 
 function App() {
   // const [data, setData] = useState([{}])
@@ -39,14 +39,14 @@ function App() {
         <Title/>
       </div>
       <div className='content'>
-        <BrowserRouter>
+        <HashRouter >
           <Routes>
             <Route path="/" element={<Navigate to="login" />}/>
             <Route path="main" element={<MainPage />} />
             <Route path="login" element={<Login />} />
             <Route path="new-session" element={<NewSession />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter >
       </div>
     </div>
   )
