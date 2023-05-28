@@ -32,6 +32,7 @@ class Room:
             'thai': 0,
             'vietnamese': 0
         }
+        self.update_data()
 
     def result(self, cuisine: str, price: list[str]): 
         p = FoodPicker(self._location)

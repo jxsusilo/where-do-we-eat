@@ -1,4 +1,11 @@
-from generator import Room, rooms
+import sys
+import os
+
+# Add the project root directory to the Python path
+root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(root_path)
+
+from backend.generator import Room, rooms
 import random 
 import string
 

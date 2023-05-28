@@ -11,6 +11,13 @@ function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    fetch('http://127.0.0.1:5000/setup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ roomcode: code, location: 0})
+  })
     navigate('/main', {state: {
       sessionCode: code,
       username: name,
