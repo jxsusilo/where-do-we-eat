@@ -34,6 +34,7 @@ def roomGeneration():
     data = request.get_json()  # Get the JSON data from the request
     location = data.get('location')
     code = data.get('roomcode')
+    name = data.get('name')
     
     if code == 0: 
         # new room
@@ -49,8 +50,10 @@ def roomGeneration():
         roomCode = code
         roomvar = generator.rooms[roomCode]
         room_flag = 1
+    roomvar.add_particpant(name)
+    print(roomvar._participants)
 
-    response = {'message': 'Data received successfully'}
+    response = {'message': 'Data received successfully', 'code': roomCode}
     print(response)
     return response, 200 
 
@@ -67,17 +70,21 @@ def submit():
     restaurant_list = list()
 
     #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
-    try:
-        roomvar = generator.rooms[room_code]
-    except:
-        print('room doesnt exist')
-        print('making sample room')
-        roomvar = generator.Room("irvine", room_code)
-        generator.rooms[room_code] = roomvar
+    # try:
+    #     roomvar = generator.rooms[room_code]
+    # except:
+    #     print('room doesnt exist')
+    #     print('making sample room')
+    #     roomvar = generator.Room("irvine", room_code)
+    #     #generator.rooms[room_code] = roomvar
 
     # roomvar = generator.Room("irvine", 'adkjhkfh')
+    roomvar = generator.rooms[room_code]
+    #print(generator.rooms)
+    #print(roomvar)
     results = roomvar.result(checked_cuisine_list, checked_price_list)
     for r in results:
+        print(r.name)
         restaurant_list.append(
             r.all()
             # {
@@ -95,7 +102,7 @@ def submit():
         #restaurant_set.append(a)
     
     response = jsonify({"restaurants": restaurant_list})
-    print(restaurant_list)
+    #print(restaurant_list)
     return response, 200
 
 @app.route('/get-participants', methods=['POST'])
@@ -105,17 +112,41 @@ def get_participants():
     print(room_code)
 
     #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
-    try:
-        roomvar = generator.rooms[room_code]
-    except:
-        print('room doesnt exist')
-        print('making sample room')
-        roomvar = generator.Room("irvine", room_code)
-        generator.rooms[room_code] = roomvar
+    # try:
+    #     roomvar = generator.rooms[room_code]
+    # except:
+    #     print('room doesnt exist')
+    #     print('making sample room')
+    #     roomvar = generator.Room("irvine", room_code)
+    #     #generator.rooms[room_code] = roomvar
 
     response = {'message': 'Data received successfully', 'info':roomvar._participants}
     return response, 200
 
+@app.route('/get-restaurants', methods=['POST'])
+def getRestaurants():
+    data = request.get_json() 
+    room_code = data.get('roomCode')
+    restaurant_list = []
+
+    #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
+    # try:
+    #     roomvar = generator.rooms[room_code]
+    # except:
+    #     print('room doesnt exist')
+    #     print('making sample room')
+    #     roomvar = generator.Room("irvine", room_code)
+    #     #generator.rooms[room_code] = roomvar
+
+    results = roomvar._restaurants
+    for r in results:
+        restaurant_list.append(
+            r.all()
+        )
+    response = jsonify({"restaurants": restaurant_list})
+    print(restaurant_list)
+    return response
+    
 
 # if they already have a session id getting/updating
 @app.route('/:sessionCode',methods=['GET'])

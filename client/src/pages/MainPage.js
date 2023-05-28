@@ -51,16 +51,16 @@ function MainPage(props) {
     { id: "4", value: "$$$$" },
   ];
 
-  const restaurants = [
-    { name: "Restaurant ABC", rating: 5, address: "123 First St, Los Angeles", imgsrc: "https://s3-media1.fl.yelpcdn.com/bphoto/hWa52yLwUAtiZh-xPYXGxg/o.jpg"},
-    { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
-    { name: "CUCINA enoteca Irvine", rating: 4, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
-    { name: "Luna Rossa", rating: 5, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
-    { name: "Brio Italian Grille", rating: 2, address: [
-      "774 Spectrum Ctr Dr",
-      "Irvine, CA 92618"
-    ], imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
-  ]
+  // const restaurants = [
+  //   { name: "Restaurant ABC", rating: 5, address: "123 First St, Los Angeles", imgsrc: "https://s3-media1.fl.yelpcdn.com/bphoto/hWa52yLwUAtiZh-xPYXGxg/o.jpg"},
+  //   { name: "Second Restaurant", rating: 3, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+  //   { name: "CUCINA enoteca Irvine", rating: 4, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+  //   { name: "Luna Rossa", rating: 5, address: "222 Second St, Irvine", imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+  //   { name: "Brio Italian Grille", rating: 2, address: [
+  //     "774 Spectrum Ctr Dr",
+  //     "Irvine, CA 92618"
+  //   ], imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
+  // ]
 
   // const participantList = [
   //   username,
@@ -90,7 +90,8 @@ const submit = () => {
   })
 };
 
-  const getdata = async () => await fetch('http://127.0.0.1:5000/get-participants', {
+  const getdata = async () => {
+    await fetch('http://127.0.0.1:5000/get-participants', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -101,7 +102,19 @@ const submit = () => {
       var participantList = response['info'];
       console.log(participantList, 'gfd');
       setParticipants(participantList)
-    })
+    });
+    await fetch('http://127.0.0.1:5000/get-restaurants', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ roomCode: sessionCode })
+    }).then(res => res.json()).then(response => {
+      console.log(response)
+      setRestoList(response['restaurants'])
+      console.log(response)
+    });
+  }
 
 
 

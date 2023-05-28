@@ -16,7 +16,7 @@ function Login(props) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ roomcode: code, location: 0})
+    body: JSON.stringify({ roomcode: code, location: 0, name: name})
   })
     navigate('/main', {state: {
       sessionCode: code,

@@ -41,14 +41,15 @@ class Room:
             p.set_api_key(api_key)
         data = p.cuisine_from_list(cuisine, price)
         self._restaurants = data
+        return self._restaurants
 
     def update_data(self):
         global rooms
-        internal = {'participants': self._participants, 
-                    'cuisines': self._cuisines,
-                    'restaurants': self._restaurants
-        }
-        rooms[self._room_id] = internal
+        # internal = {'participants': self._participants, 
+        #             'cuisines': self._cuisines,
+        #             'restaurants': self._restaurants
+        # }
+        rooms[self._room_id] = self
 
     def add_particpant(self, participant: str):
         self._participants.append(participant)

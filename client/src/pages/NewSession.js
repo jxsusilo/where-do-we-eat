@@ -6,18 +6,22 @@ function NewSession() {
 
     const [name, setName] = useState("");
     const [loc, setLoc] = useState("");
+    const [sessionCode, setCode] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        fetch('http://127.0.0.1:5000/setup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ roomcode: 0, location: loc})
-  })
+        await fetch('http://127.0.0.1:5000/setup', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ roomcode: 0, location: loc, name: name})
+        }).then(res => res.json()).then(response => {
+            console.log(response);
+            setCode(response['code']);
+          });
         navigate('/main', {state: {
-          sessionCode: '(RANDOMLY GENERATED CODE)',
+          sessionCode: sessionCode,
           username: name,
         }});
       }
