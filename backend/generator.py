@@ -46,7 +46,8 @@ class Room:
     def give_final_results(self, cuisines, price) -> None: 
         MAX_CHOICES = 10
         for c in cuisines:
-            listings = math.ceil((self._cuisines[c]/self.all_votes())*10)
+            c = c.lower()
+            listings = math.ceil((self._cuisines[c]/(self.all_votes()+1))*10)
             if listings > 1:
                 self.result(c, price, listings)
             else:

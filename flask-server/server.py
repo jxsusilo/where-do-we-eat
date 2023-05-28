@@ -82,8 +82,8 @@ def submit():
     roomvar = generator.rooms[room_code]
     #print(generator.rooms)
     #print(roomvar)
-    results = roomvar.result(checked_cuisine_list, checked_price_list)
-    for r in results:
+    results = roomvar.give_final_results(checked_cuisine_list, checked_price_list)
+    for r in roomvar._restaurants:
         print(r.name)
         restaurant_list.append(
             r.all()
