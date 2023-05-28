@@ -6,7 +6,7 @@ function NewSession() {
 
     const [name, setName] = useState("");
     const [loc, setLoc] = useState("");
-    const [sessionCode, setCode] = useState("");
+    //const [sessionCode, setCode] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -18,12 +18,15 @@ function NewSession() {
             body: JSON.stringify({ roomcode: 0, location: loc, name: name})
         }).then(res => res.json()).then(response => {
             console.log(response);
-            setCode(response['code']);
-          });
-        navigate('/main', {state: {
-          sessionCode: sessionCode,
-          username: name,
-        }});
+            const sessionCode = response['code'];;
+            console.log(response['code'])
+            navigate('/main', {state: {
+                sessionCode: sessionCode,
+                username: name,
+              }});
+        
+        });
+        
       }
 
     return(
