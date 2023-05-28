@@ -85,7 +85,8 @@ const submit = () => {
     body: JSON.stringify({ checkedCuisine: checkedListCuisine, checkedPrice: checkedListPrice, roomCode: sessionCode })
   }).then(res => res.json()).then(response => {
     console.log(response)
-    setRestoList(response['info'])
+    setRestoList(response['restaurants'])
+    console.log(response)
   })
 };
 
@@ -118,7 +119,7 @@ const submit = () => {
         </div>
         <div className='column' id='column2'>
           <h2>Results</h2>
-          <RestaurantList listData={restaurants}/>
+          <RestaurantList listData={restoList}/>
         </div>
         <div className='column' id='column3'>
           <h2>Participants</h2>

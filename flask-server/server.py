@@ -29,7 +29,7 @@ def submit():
     checked_price_list = data.get('checkedPrice')
     room_code = data.get('roomCode')
     print(checked_cuisine_list, checked_price_list, room_code)
-    restaurant_set = list()
+    restaurant_list = list()
 
     #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
     try:
@@ -41,10 +41,26 @@ def submit():
         generator.rooms[room_code] = roomvar
 
     # roomvar = generator.Room("irvine", 'adkjhkfh')
-    for a in roomvar.result(checked_cuisine_list, checked_price_list):
-        restaurant_set.append(a)
+    results = roomvar.result(checked_cuisine_list, checked_price_list)
+    for r in results:
+        restaurant_list.append(
+            r.all()
+            # {
+            #     'name': r.name,
+            #     'image_url': r.image_url,
+            #     'cuisine': r.cuisine,
+            #     'price': r.price,
+            #     'rating': r.rating,
+            #     'location': r.location,
+            #     'votes': r.votes
+            # }
+        )
     
-    response = {'message': 'Data received successfully', 'info':restaurant_set}
+    #for a in roomvar.result(checked_cuisine_list, checked_price_list):
+        #restaurant_set.append(a)
+    
+    response = jsonify({"restaurants": restaurant_list})
+    print(restaurant_list)
     return response, 200
 
 @app.route('/get-participants', methods=['POST'])
