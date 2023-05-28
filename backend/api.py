@@ -31,8 +31,7 @@ class FoodPicker:
     def __init__(self, location = None):
         self._base_url = 'https://api.yelp.com/v3/businesses/search'
         self._location = location
-        self._api_key = None
-        self._MAX_RESULTS = 10
+        self._api_key = 'EKyV7SvZR1nTSR_oSsTTCC_YffluSpRkz0pxyfRGwnbmXsIsLAIHVUkn-D46XSgdusBe0d91UjEOSSQgeropO-m81Mthib2dzrZXmX3c-JokUnKhBoYhhmbH3IhxZHYx'
 
     def set_api_key(self, key):
         self._api_key = key
@@ -50,12 +49,8 @@ class FoodPicker:
             params += 'price='+ str(p)+ '&'
         return params[:-1]
 
-    def url(self, cuisine: str, price: list) -> str: 
-        # limit will change based on cuisine
-        # let's say 10 ppl are deciding, 6 ppl choose italian and 4 ppl choose american
-        # we'd wanna display 6 italian results and 4 american results 
-
-        params = {'location': self._location, 'categories': cuisine, 'sort_by': 'best_match', 'limit': self._MAX_RESULTS}
+    def url(self, cuisine: str, price: list, number) -> str: 
+        params = {'location': self._location, 'categories': cuisine, 'sort_by': 'best_match', 'limit': number}
         temp = urllib.parse.urlencode(params) + self.translate_price(price)
         return self._base_url +'?'+ temp
     
@@ -67,19 +62,19 @@ class FoodPicker:
                 total.extend(results)
         return total 
 
-
-    def result(self, cuisine: str, price: list[str]) -> list[Restaurant] | str: 
+    def result(self, cuisine: str, price: list[str], number) -> list[Restaurant] | str: 
         if not self._api_key:  
             try: 
                 with open(script_path.joinpath("mock.json"), "r") as f:
                     results = json.load(f)
-                    data = self.filter(cuisine, results)
+                    data = self.filter(cuisine, results)[0:number]
                     return data
             except FileNotFoundError:
                 return "Error: mock.json file not found"
         else: 
+            print('reached!')
             try: 
-                response = requests.get(self.url(cuisine, price), headers=self.header())
+                response = requests.get(self.url(cuisine, price, number), headers=self.header())
                 data = response.text
                 results = self.filter(cuisine, json.loads(data))
                 return results
