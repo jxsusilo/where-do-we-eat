@@ -36,6 +36,7 @@ function NewSession() {
                 <label>Location:
                     <br/>
                     <input
+                    className='textbox'
                     type="text" 
                     value={loc}
                     onChange={(e) => setLoc(e.target.value)}
@@ -45,13 +46,14 @@ function NewSession() {
                 <label>Name:
                     <br/>
                     <input
+                    className='textbox'
                     type="text" 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     />
                 </label>
                 <br/>
-                <input type="submit" />
+                <input className='submit' type="submit" value={'SUBMIT'}/>
             </form>
         </div>
     )
