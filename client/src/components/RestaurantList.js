@@ -5,7 +5,7 @@ function RestaurantList(props) {
         <div className="card-body">
             {props.listData.map((item, index) => {
                 return (
-                    <Restaurant name={item.name} rating={item.rating} address={item.address} imgsrc={item.imgsrc}/>
+                    <Restaurant resto={item}/>
                 );
             })}
         </div>

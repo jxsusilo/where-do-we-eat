@@ -60,24 +60,60 @@ def roomGeneration():
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.get_json()  # Get the JSON data from the request
-    checked_list = data.get('checked')
-    #price_list = data.get('price')
-    print(checked_list)
-    #print(price_list)
-    restaurant_set = list()
+    checked_cuisine_list = data.get('checkedCuisine')
+    checked_price_list = data.get('checkedPrice')
+    room_code = data.get('roomCode')
+    print(checked_cuisine_list, checked_price_list, room_code)
+    restaurant_list = list()
 
-    if room_flag == 1:
-        #existing room
-        pass
-    else: 
-        #new room 
-        for a in roomvar.result(checked_list[0],['$', '$$', '$$$', '$$$$']):
-            restaurant_set.append(a)
+    #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
+    try:
+        roomvar = generator.rooms[room_code]
+    except:
+        print('room doesnt exist')
+        print('making sample room')
+        roomvar = generator.Room("irvine", room_code)
+        generator.rooms[room_code] = roomvar
 
+    # roomvar = generator.Room("irvine", 'adkjhkfh')
+    results = roomvar.result(checked_cuisine_list, checked_price_list)
+    for r in results:
+        restaurant_list.append(
+            r.all()
+            # {
+            #     'name': r.name,
+            #     'image_url': r.image_url,
+            #     'cuisine': r.cuisine,
+            #     'price': r.price,
+            #     'rating': r.rating,
+            #     'location': r.location,
+            #     'votes': r.votes
+            # }
+        )
     
+    #for a in roomvar.result(checked_cuisine_list, checked_price_list):
+        #restaurant_set.append(a)
+    
+    response = jsonify({"restaurants": restaurant_list})
+    print(restaurant_list)
+    return response, 200
 
-    response = {'message': 'Data received successfully', 'info':restaurant_set}
-    print(response)
+@app.route('/get-participants', methods=['POST'])
+def get_participants():
+    data = request.get_json() 
+    room_code = data.get('roomCode')
+    print(room_code)
+
+    #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
+    try:
+        roomvar = generator.rooms[room_code]
+    except:
+        print('room doesnt exist')
+        print('making sample room')
+        roomvar = generator.Room("irvine", room_code)
+        generator.rooms[room_code] = roomvar
+
+    response = {'message': 'Data received successfully', 'info':roomvar._participants}
     return response, 200
 
 
