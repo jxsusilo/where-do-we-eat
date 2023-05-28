@@ -31,11 +31,38 @@ def submit():
     print(checked_cuisine_list, checked_price_list, room_code)
     restaurant_set = list()
 
-    # roomvar = generator.Room("irvine", 'adkjhkfh')
-    # for a in roomvar.result(checked_list[0],['$', '$$', '$$$', '$$$$']):
-    #     restaurant_set.append(a)
+    #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
+    try:
+        roomvar = generator.rooms[room_code]
+    except:
+        print('room doesnt exist')
+        print('making sample room')
+        roomvar = generator.Room("irvine", room_code)
+        generator.rooms[room_code] = roomvar
 
+    # roomvar = generator.Room("irvine", 'adkjhkfh')
+    for a in roomvar.result(checked_cuisine_list, checked_price_list):
+        restaurant_set.append(a)
+    
     response = {'message': 'Data received successfully', 'info':restaurant_set}
+    return response, 200
+
+@app.route('/get-participants', methods=['POST'])
+def get_participants():
+    data = request.get_json() 
+    room_code = data.get('roomCode')
+    print(room_code)
+
+    #TEMP CODE!! when we get the final, we shouldnt be submitting unexisting room codes
+    try:
+        roomvar = generator.rooms[room_code]
+    except:
+        print('room doesnt exist')
+        print('making sample room')
+        roomvar = generator.Room("irvine", room_code)
+        generator.rooms[room_code] = roomvar
+
+    response = {'message': 'Data received successfully', 'info':roomvar._participants}
     return response, 200
 
 

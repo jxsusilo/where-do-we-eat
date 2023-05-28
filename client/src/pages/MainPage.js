@@ -27,6 +27,8 @@ function MainPage(props) {
 
   const [checkedListCuisine, setCheckedListCuisine] = useState([]);
   const [checkedListPrice, setCheckedListPrice] = useState([]);
+  const [participants, setParticipants] = useState([]);
+  const [restoList, setRestoList] = useState([]);
 
   const cuisineList = [
     { id: "1", value: "American" },
@@ -60,17 +62,18 @@ function MainPage(props) {
     ], imgsrc: "https://s3-media2.fl.yelpcdn.com/bphoto/2vmY6wfVW3LRap0DFS-Ayw/o.jpg"},
   ]
 
-  const participantList = [
-    username,
-    'Friend1',
-    'Friend2',
-    'Friend3',
-  ]
+  // const participantList = [
+  //   username,
+  //   'Friend1',
+  //   'Friend2',
+  //   'Friend3',
+  // ]
 
 
 useEffect(() => {
   console.log(checkedListCuisine, checkedListPrice);
   console.log(JSON.stringify({ checkedCuisine: checkedListCuisine, checkedPrice: checkedListPrice }));
+  getdata();
 }, [checkedListCuisine, checkedListPrice]);
 
 const submit = () => {
@@ -82,8 +85,24 @@ const submit = () => {
     body: JSON.stringify({ checkedCuisine: checkedListCuisine, checkedPrice: checkedListPrice, roomCode: sessionCode })
   }).then(res => res.json()).then(response => {
     console.log(response)
+    setRestoList(response['info'])
   })
 };
+
+  const getdata = async () => await fetch('http://127.0.0.1:5000/get-participants', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ roomCode: sessionCode })
+    }).then(res => res.json()).then(response => {
+      console.log(response);
+      var participantList = response['info'];
+      console.log(participantList, 'gfd');
+      setParticipants(participantList)
+    })
+
+
 
   return (
     <div className='App'>
@@ -103,11 +122,12 @@ const submit = () => {
         </div>
         <div className='column' id='column3'>
           <h2>Participants</h2>
-            {participantList.map((pname, index) => {
-                  return (
-                      <p>{pname}</p>
-                  );
-            })}
+            {participants.map((pname, index) => {
+                return (
+                    <p>{pname}</p>
+                );
+              })
+            }
         </div>
       </div>
     </div>
