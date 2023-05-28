@@ -61,12 +61,11 @@ def main():
     MAX_CHOICES = 10
     room1 = logistics()
     price = prices()
-
     all_cuisines = ask_cuisine(room1)
+    
     print(room1._cuisines)
     for c in all_cuisines:
         listings = math.ceil((room1._cuisines[c]/room1.all_votes())*10)
-        print(listings)
         if listings > 1:
             room1.result(c, price, listings)
         else:
