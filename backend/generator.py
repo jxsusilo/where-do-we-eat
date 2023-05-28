@@ -34,13 +34,13 @@ class Room:
         }
         self.update_data()
 
-    def result(self, cuisine: str, price: list[str]): 
+    def result(self, cuisine: str, price: list[str], number): 
         p = FoodPicker(self._location)
-        api_key = input("Enter apikey: ")
-        if len(api_key) > 0:
-            p.set_api_key(api_key)
-        data = p.result(cuisine, price)
-        self._restaurants = data
+        #api_key = input("Enter apikey: ")
+        #if len(api_key) > 0:
+            #p.set_api_key(api_key)
+        data = p.result(cuisine, price, number)
+        self._restaurants.extend(data)
 
     def update_data(self):
         global rooms
@@ -57,10 +57,6 @@ class Room:
         for cui, count in self._cuisines.items(): 
             if cui == cuisine.lower(): 
                 self._cuisines[cui] += 1
-    """
-    def add_restaurant(self, restaurant: Restaurant):
-        self._restaurants.append(restaurant)
-    """
 
     def vote(self, number: int, direction: int):
         restaurant = self._restaurants[number-1] 
@@ -68,8 +64,6 @@ class Room:
             restaurant.downvote()
         elif (direction > 0):
             restaurant.upvote()
-            self.vote_cuisine(restaurant.cuisine)
-        
 
     def show_restaurant_list(self):
         desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
@@ -77,5 +71,8 @@ class Room:
         for r in range(len(desc)): 
             print(r+1,') ', desc[r].name, ' (',desc[r].votes,')', sep ='')
 
-    
-    
+    def all_votes(self):
+        total = 0 
+        for val in self._cuisines.values(): 
+            total += val
+        return total
