@@ -42,7 +42,7 @@ class Room:
             #p.set_api_key(api_key)
         data = p.result(cuisine, price, number)
         self._restaurants.extend(data)
-        
+
         desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
         self._restaurants = desc
 
@@ -50,7 +50,11 @@ class Room:
         MAX_CHOICES = 10
         for c in cuisines:
             c = c.lower()
-            listings = math.ceil((self._cuisines[c]/(self.all_votes()+1))*10)
+            try: 
+                listings = math.ceil((self._cuisines[c]/(self.all_votes()))*10)
+            except ZeroDivisionError: 
+                listings = MAX_CHOICES
+                
             if listings > 1:
                 self.result(c, price, listings)
             else:
