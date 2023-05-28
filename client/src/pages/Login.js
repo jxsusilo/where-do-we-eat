@@ -35,6 +35,7 @@ function Login(props) {
             <label>Session Code:
                 <br/>
                 <input
+                className='textbox'
                 type="text" 
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
@@ -44,13 +45,14 @@ function Login(props) {
             <label>Name:
                 <br/>
                 <input
+                className='textbox'
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 />
             </label>
             <br/>
-            <input type="submit" />
+            <input className='submit' type="submit" value={'SUBMIT'}/>
         </form>
         <p>OR</p>
         <h3>Create a New Session</h3>

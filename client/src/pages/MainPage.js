@@ -120,8 +120,10 @@ const submit = () => {
 
   return (
     <div className='App'>
-      <p>Welcome, {username}!</p>
-      <p>Session Code: {sessionCode}</p>
+      <div id='intro'>
+        <p>Welcome, {username}!</p>
+        <p>Session Code: <span id='session-code'>{sessionCode}</span></p>
+      </div>
       <div className='container'>
         <div className='column' id='column1'>
           <h2>Enter Your Preferences:</h2>
