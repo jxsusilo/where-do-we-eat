@@ -39,13 +39,22 @@ class Room:
 
     def result(self, cuisine: str, price: list[str], number): 
         p = FoodPicker(self._location)
-        data = p.result(cuisine, price, number)
+        data = p.result(cuisine, price, number) #new api data
+        for e in data: 
+            if e.name in self.names(): 
+                data.remove(e)
+
         data.extend(self._restaurants)
         data = set(data)
         data = list(data)
         self._restaurants = sorted(data, key = lambda x: x.votes, reverse=True)[:MAX_CHOICES]
         
-
+    def names(self): 
+        words = []
+        for x in self._restaurants: 
+            words.append(x.name)
+        return words
+    
     def give_final_results(self, cuisines, price) -> None: 
         for c in cuisines:
             c = c.lower()
@@ -76,12 +85,19 @@ class Room:
         restaurant = self._restaurants[number-1] 
         if (direction < 0): 
             restaurant.downvote()
+            #print(restaurant)
         elif (direction > 0):
+            #print(restaurant)
+
             restaurant.upvote()
-    
+            #print(restaurant)
+
     def show_restaurant_list(self):
         desc = sorted(self._restaurants, key = lambda x: x.votes, reverse=True)
         self._restaurants = desc
+        #print(self._restaurants)
+        #for res in self._restaurants:
+            #print(res.get_votes())
         for r in range(len(desc)): 
             print(r+1,') ', desc[r].name, ' (',desc[r].votes,')', sep ='')
 
